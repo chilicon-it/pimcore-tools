@@ -34,9 +34,7 @@
   "autoload": {
     "psr-4": {
       "Chilicon\\Pimcore\\": "Pimcore"
-    },
-    "classmap": [],
-    "exclude-from-classmap": []
+    }
   },
   "bin": []
 }
