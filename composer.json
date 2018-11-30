@@ -1,0 +1,42 @@
+{
+  "name": "chilicon-it/pimcore-tools",
+  "type": "library",
+  "version": "1.0.0",
+  "description": "Tools for Pimcore",
+  "keywords": [
+    "pimcore",
+    "tools",
+    "database"
+  ],
+  "homepage": "https://www.chilicon-it.de/",
+  "license": "GPL-3.0-or-later",
+  "authors": [
+    {
+      "name": "Chilicon IT Team",
+      "email": "info@chilicon-it.de",
+      "homepage": "https://www.chilicon-it.de/",
+      "role": "Developer"
+    },
+    {
+      "name": "Yaroslav Chupikov",
+      "email": "yaroslav@mirasoltek.com",
+      "homepage": "https://www.mirasoltek.com/",
+      "role": "Developer"
+    }
+  ],
+  "support": {},
+  "require": {
+    "php": ">=7.1",
+    "pimcore/pimcore": ">=5.4"
+  },
+  "require-dev": {},
+  "suggest": {},
+  "autoload": {
+    "psr-4": {
+      "Chilicon\\Pimcore\\Command\\": "Command"
+    },
+    "classmap": [],
+    "exclude-from-classmap": []
+  },
+  "bin": []
+}
