@@ -33,7 +33,7 @@
   "suggest": {},
   "autoload": {
     "psr-4": {
-      "Chilicon\\Pimcore\\Command\\": "Command"
+      "Chilicon\\Pimcore\\": "Pimcore"
     },
     "classmap": [],
     "exclude-from-classmap": []
