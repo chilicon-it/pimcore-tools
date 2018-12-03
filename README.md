@@ -5,7 +5,7 @@ Tools contain Symfony commands:
 
 1. `chilicon:db:dump`: Creates database dump of the current Pimcore instance.
 1. `chilicon:cache:clear`: Clears Pimcore cache (runs command "`bin/console cache:clear`")  with previous change permissions for "`var`" Pimcore directory.
-1. `chilicon:fix-permissions`: Change permissions of the  "`var`" Pimcore directory in purpose of write by server and some system user.
+1. `chilicon:permissions:change`: Change permissions of the  "`var`" Pimcore directory in purpose of write by server and some system user.
 
 ## Installation
 
@@ -46,7 +46,7 @@ Tools contain Symfony commands:
 Example:
 
     <?php
-
+    
     return [
         'hostname' => '', // Leave it empty to use real host name
         'path' => '/chilicon-it/{host}',
@@ -60,24 +60,67 @@ Example:
 Open "`app/config/services.yml`" and add following code:
 
     services:
-
+        
         # ...
-
+        
         Chilicon\Pimcore\Command\DbDumpCommand:
             tags:
                 - { name: 'console.command', command: 'chilicon:db:dump' }
-
+        
         Chilicon\Pimcore\Command\ChangePermissionsCommand:
             tags:
                 - { name: 'console.command', command: 'chilicon:permissions:change' }
-
+        
+        Chilicon\Pimcore\Command\ClearCacheCommand:
+            tags:
+                - { name: 'console.command', command: 'chilicon:cache:clear' }
+        
         # ...
 
 ## Usage
 
+Please use "`bin/console help <COMMAND>`" for actual information about usage.
+
+### Create database dump
+
     bin/console chilicon:db:dump
 
-Etc.
+### Change permissions
+
+    bin/console chilicon:permissions:change --user=<USERNAME> --group=<GROUP>
+    
+    # For example:
+    
+    # Equals to set of commands:
+    # sudo chown -R chilicon:www-data /home/chilicon/work/test/pimcore/workfiles/src/var /home/chilicon/work/test/pimcore/workfiles/src/web/var
+    # sudo find /home/chilicon/work/test/pimcore/workfiles/src/var -type f -exec chmod 664 {} \;
+    # sudo find /home/chilicon/work/test/pimcore/workfiles/src/var -type d -exec chmod 775 {} \;
+    # sudo find /home/chilicon/work/test/pimcore/workfiles/src/web/var -type f -exec chmod 664 {} \;
+    # sudo find /home/chilicon/work/test/pimcore/workfiles/src/web/var -type d -exec chmod 775 {} \;
+        
+    bin/console chilicon:permissions:change --user=chilicon --group=www-data --sudo
+    
+    # Equals to set of commands:
+    # chown -R www-data:www-data /home/chilicon/work/test/pimcore/workfiles/src/var
+    # find /home/chilicon/work/test/pimcore/workfiles/src/var -type f -exec chmod 644 {} \;
+    # find /home/chilicon/work/test/pimcore/workfiles/src/var -type d -exec chmod 755 {} \;
+            
+    bin/console chilicon:permissions:change --user=www-data --group=www-data --filemode=644  --dirmode=755 --dir=/var
+
+### Clear cache
+
+    bin/console chilicon:cache:clear --user=<USERNAME> --group=<GROUP>
+    
+    # For example:
+    # chown -R chilicon:www-data /home/chilicon/work/test/pimcore/workfiles/src/var
+    # find /home/chilicon/work/test/pimcore/workfiles/src/var -type f -exec chmod 664 {} \;
+    # find /home/chilicon/work/test/pimcore/workfiles/src/var -type d -exec chmod 775 {} \;
+    # bin/console cache:clear
+    # chown -R chilicon:www-data /home/chilicon/work/test/pimcore/workfiles/src/var
+    # find /home/chilicon/work/test/pimcore/workfiles/src/var -type f -exec chmod 664 {} \;
+    # find /home/chilicon/work/test/pimcore/workfiles/src/var -type d -exec chmod 775 {} \;
+        
+    bin/console chilicon:cache:clear -u chilicon -g www-data
 
 ## Copyright and License
 

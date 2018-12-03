@@ -66,16 +66,15 @@ class ChangePermissionsCommand extends AbstractCommand
             throw new \Exception('List of directories is required. Please specify "--dir=<RELATIVE_DIRECTORY>".');
         }
 
-        echo 'USER     : ' . $username . "\n"
+        $output->writeln('USER     : ' . $username . "\n"
             . 'GROUP    : ' . $group . "\n"
             . 'FILEMODE : ' . $filemode . "\n"
             . 'DIRMODE  : ' . $dirmode . "\n"
             . 'SUDO     : ' . ($isSudo ? 'yes' : 'no') . "\n"
-            . "\n"
-        ;
+        );
 
         $cmd = self::getChownCommand($dirs, $username, $group, $isSudo);
-        echo ($isTest ? 'TEST:' : 'RUN:') . ' ' . $cmd . "\n";
+        $output->writeln(($isTest ? 'TEST:' : 'EXEC:') . ' ' . $cmd);
         if (! $isTest) {
             exec($cmd, $out);
         }
@@ -83,13 +82,13 @@ class ChangePermissionsCommand extends AbstractCommand
         foreach ($dirs as $dir) {
 
             $cmd = self::getChmodFilesCommand($dir, $filemode, $isSudo);
-            echo ($isTest ? 'TEST:' : 'RUN:') . ' ' . $cmd . "\n";
+            $output->writeln(($isTest ? 'TEST:' : 'EXEC:') . ' ' . $cmd);
             if (! $isTest) {
                 exec($cmd, $out);
             }
 
             $cmd = self::getChmodDirsCommand($dir, $dirmode, $isSudo);
-            echo ($isTest ? 'TEST:' : 'RUN:') . ' ' . $cmd . "\n";
+            $output->writeln(($isTest ? 'TEST:' : 'EXEC:') . ' ' . $cmd);
             if (! $isTest) {
                 exec($cmd, $out);
             }
@@ -154,9 +153,11 @@ class ChangePermissionsCommand extends AbstractCommand
         $isSudo = $input->getOption('sudo');
         $isTest = $input->getOption('test');
 
+        $output->writeln('Changing permissions for directories...' . "\n");
+
         self::changePermissions($input, $output, $this->dirs, $username, $group, $filemode, $dirmode, $isSudo, $isTest);
 
-        echo "\nCOMPLETE :)\n\n";
+        $output->writeln("\nCOMPLETE :)\n");
     }
 
     /**

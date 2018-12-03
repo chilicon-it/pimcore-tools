@@ -45,6 +45,8 @@ class DbDumpCommand extends AbstractCommand
         $output->writeln('CMD : ' . preg_replace('/--password=\S*/', '--password=*****', $cmd));
 
         exec($cmd, $out);
+
+        $output->writeln("\nCOMPLETE :)\n");
     }
 
 
