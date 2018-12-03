@@ -67,6 +67,10 @@ Open "`app/config/services.yml`" and add following code:
             tags:
                 - { name: 'console.command', command: 'chilicon:db:dump' }
 
+        Chilicon\Pimcore\Command\ChangePermissionsCommand:
+            tags:
+                - { name: 'console.command', command: 'chilicon:permissions:change' }
+
         # ...
 
 ## Usage

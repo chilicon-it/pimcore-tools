@@ -22,7 +22,13 @@ abstract class AbstractCommand extends Command
      * Project root directory.
      * @var string
      */
-    protected $rootDir = '';
+    private $rootDir = '';
+
+    /**
+     * Current system username.
+     * @var string
+     */
+    protected $systemUsername = null;
 
     /**
      * Shared input nterface.
@@ -44,7 +50,6 @@ abstract class AbstractCommand extends Command
 
     public function __construct()
     {
-        $this->rootDir = realpath(__DIR__ . '/../../../../..');
         $this->loadConfig();
         parent::__construct();
     }
@@ -60,13 +65,25 @@ abstract class AbstractCommand extends Command
      */
     protected function loadConfig()
     {
-        $filename = $this->rootDir . '/var/config/chilicon-it.php';
+        $filename = $this->getRootDir() . '/var/config/chilicon-it.php';
 
         if (!is_file($filename) || !is_readable($filename)) {
             return;
         }
 
         $this->config = require($filename);
+    }
+
+    /**
+     * Project root directory.
+     * @return string Project root directory.
+     */
+    protected function getRootDir(): string
+    {
+        if (empty($this->rootDir)) {
+            $this->rootDir = realpath(__DIR__ . '/../../../../..');
+        }
+        return $this->rootDir;
     }
 
     /**
@@ -108,7 +125,7 @@ abstract class AbstractCommand extends Command
      */
     protected function getDatabaseCredentials(): array
     {
-        $filename = $this->rootDir . '/var/config/system.php';
+        $filename = $this->getRootDir() . '/var/config/system.php';
 
         if (!is_file($filename)) {
             throw new \Exception("System config file not found: '{$filename}'.");
@@ -140,6 +157,18 @@ abstract class AbstractCommand extends Command
         }
 
         return $params;
+    }
+
+    /**
+     * Returns current system user name even if script run as sudoer process.
+     * @return string Current system user name.
+     */
+    protected function getSystemUsername(): string
+    {
+        if ($this->systemUsername === null) {
+            $this->systemUsername = trim(exec('echo $USER'));
+        }
+        return $this->systemUsername;
     }
 
     /**
@@ -177,7 +206,7 @@ abstract class AbstractCommand extends Command
             $path = self::DEFAULT_PATH;
         }
 
-        return $this->rootDir . $this->substReplace($path, [
+        return $this->getRootDir() . $this->substReplace($path, [
             'host' => $this->getHostname(),
         ]);
     }
