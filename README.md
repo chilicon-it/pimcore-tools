@@ -12,18 +12,18 @@ Tools contain Symfony commands:
 ### 1. Add to 'composer.json'
 
     "require": {
-        "chilicon-it/pimcore-tools": "dev-develop" 
+        "chilicon-it/pimcore-tools": "dev-master" 
     },
     "repositories": [
         {
             "type":"package",
             "package":{
                 "name":"chilicon-it/pimcore-tools",
-                "version":"dev-develop",
+                "version":"dev-master",
                 "source":{
                     "type":"git",
-                    "url":"git@bitbucket.org:mirasoltek/chilicon-pimcore-tools.git",
-                    "reference":"develop" 
+                    "url":"git@github.com:chilicon-it/pimcore-tools.git",
+                    "reference":"master" 
                 }
             }
         }
@@ -33,6 +33,8 @@ Tools contain Symfony commands:
             "Chilicon\\Pimcore\\": "vendor/chilicon-it/pimcore-tools/Pimcore" 
         }
     },
+
+For accessing **development version** of the tools please use "`dev-develop`" as *version* and "`master`" as *reference*.
 
 ### 2. Run Composer
 
@@ -49,7 +51,7 @@ Example:
     
     return [
         'hostname' => '', // Leave it empty to use real host name
-        'path' => '/chilicon-it/{host}',
+        'path' => '/chilicon-it/{host}', # Relative to project root directory
         'hostalias' => [
             'some_host_name' => 'some_host_alias',
         ],
