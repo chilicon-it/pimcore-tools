@@ -34,7 +34,7 @@ Tools contain Symfony commands:
         }
     },
 
-For accessing **development version** of the tools please use "`dev-develop`" as *version* and "`master`" as *reference*.
+For accessing **development version** of the tools please use "`dev-develop`" as *version* and "`develop`" as *reference*.
 
 ### 2. Run Composer
 
