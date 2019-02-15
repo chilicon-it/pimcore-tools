@@ -126,6 +126,6 @@ Please use "`bin/console help <COMMAND>`" for actual information about usage.
 
 ## Copyright and License
 
-Copyright: (C) 2018 [Chilicon IT](https://www.chilicon-it.de/).
+Copyright: (C) 2018-2019 [CHILICON IT](https://www.chilicon-it.de/).
 
 License: [GPL 3.0](gpl-3.0.txt).
