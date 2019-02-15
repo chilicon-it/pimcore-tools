@@ -79,7 +79,7 @@ class ClearCacheCommand extends AbstractCommand
 
         ChangePermissionsCommand::changePermissions($input, $output, $dirs, $username, $group, $filemode, $dirmode, $isSudo, $isTest);
 
-        $cmd = $this->getClearCacheCommand();
+        $cmd = $this->getClearCacheCommand($isSudo);
         $output->writeln(($isTest ? 'TEST:' : 'EXEC:') . ' ' . $cmd);
         if (! $isTest) {
             passthru($cmd);
@@ -96,8 +96,8 @@ class ClearCacheCommand extends AbstractCommand
      * Creates command for clear Pimcore cache.
      * @return string Command for clear Pimcore cache.
      */
-    private function getClearCacheCommand(): string
+    private function getClearCacheCommand(bool $isSudo): string
     {
-        return $this->getRootDir() . '/bin/console cache:clear';
+        return ($isSudo ? 'sudo ' : '') . $this->getRootDir() . '/bin/console cache:clear';
     }
 }

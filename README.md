@@ -34,7 +34,7 @@ Tools contain Symfony commands:
         }
     },
 
-For accessing **development version** of the tools please use "`dev-develop`" as *version* and "`master`" as *reference*.
+For accessing **development version** of the tools please use "`dev-develop`" as *version* and "`develop`" as *reference*.
 
 ### 2. Run Composer
 
@@ -126,6 +126,6 @@ Please use "`bin/console help <COMMAND>`" for actual information about usage.
 
 ## Copyright and License
 
-Copyright: (C) 2018 [CHILICON IT](https://www.chilicon-it.de/).
+Copyright: (C) 2018-2019 [CHILICON IT](https://www.chilicon-it.de/).
 
 License: [GPL 3.0](gpl-3.0.txt).
